@@ -1,0 +1,8 @@
+name: Gitter
+version: '${project.version}'
+main: com.hyrulecraft.gitter.internal.Main
+api-version: 1.18
+authors: [ Linebeck ]
+commands:
+  gitter:
+    aliases: [ gitit ]
