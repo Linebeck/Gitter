@@ -13,7 +13,7 @@ public class GitHandler {
 
     private final String repo;
 
-    private File file;
+    private final File file;
 
     public GitHandler(String repo, String directory) {
         this.repo = repo;
@@ -21,16 +21,14 @@ public class GitHandler {
     }
 
     public boolean cloneRepo() {
-        AtomicBoolean success = new AtomicBoolean(false);
+        AtomicBoolean success = new AtomicBoolean(true);
         Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
             try {
                 File gitFile = new File(this.file + File.separator + ".git");
                 if(gitFile.exists()) {
                     Git git = Git.open(gitFile);
-                    if(git != null) {
-                        git.pull().call();
-                        git.close();
-                    }
+                    git.pull().call();
+                    git.close();
                 } else {
                     Git.cloneRepository()
                             .setURI(this.repo)
@@ -38,9 +36,9 @@ public class GitHandler {
                             .call()
                             .close();
                 }
-                success.set(true);
             } catch (GitAPIException | IOException exception) {
                 exception.printStackTrace();
+                success.set(false);
             }
         });
 
