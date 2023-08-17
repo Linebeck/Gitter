@@ -1,7 +1,7 @@
 name: Gitter
 version: '${project.version}'
-main: com.hyrulecraft.gitter.internal.Main
-api-version: 1.18
+main: com.linebeck.gitter.internal.Main
+api-version: 1.20
 authors: [ Linebeck ]
 commands:
   gitter:

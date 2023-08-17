@@ -1,6 +1,18 @@
 # Gitter
 # Created by Linebeck
-# © 2016 - 2022. All Rights Reserved.
+# © 2016 - 2023. All Rights Reserved.
 
-Repository:
-Directory:
+SSH-Keys:
+  SSH-Key-One:
+    Name:
+    SSH-Key-Path:
+    SSH-Key-Password:
+
+
+Sessions:
+  Session-One:
+    Name:
+    Repository:
+    Directory-Location:
+    Repository-Type:
+    SSH-Key-Name:

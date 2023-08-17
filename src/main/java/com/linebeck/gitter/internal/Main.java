@@ -1,7 +1,8 @@
-package com.hyrulecraft.gitter.internal;
+package com.linebeck.gitter.internal;
 
-import com.hyrulecraft.gitter.commands.GitterCommand;
-import com.hyrulecraft.gitter.handlers.GitHandler;
+import com.linebeck.gitter.commands.GitterCommand;
+import com.linebeck.gitter.managers.GitSessionManager;
+import com.linebeck.gitter.managers.SSHKeyManager;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -12,8 +13,11 @@ public final class Main extends JavaPlugin {
     private static Main main;
     public static Main getInstance() { return main; }
 
-    private GitHandler gitHandler;
-    public GitHandler getGitHandler() { return gitHandler; }
+    private GitSessionManager gitSessionManager;
+    public GitSessionManager getGitSessionManager() { return gitSessionManager; }
+
+    private SSHKeyManager sshKeyManager;
+    public SSHKeyManager getSSHKeyManager() { return sshKeyManager; }
 
     @Override
     public void onEnable() {
@@ -27,14 +31,12 @@ public final class Main extends JavaPlugin {
 
         loadConfiguration();
 
-        String repo = getConfig().getString("Repository");
-        String directory = getConfig().getString("Directory");
+        this.gitSessionManager = new GitSessionManager(getConfig());
 
-        if(repo == null || directory == null) {
-            return;
-        }
+        if(gitSessionManager.gitSessions.size() == 0) { return; }
 
-        this.gitHandler = new GitHandler(repo, directory);
+        this.sshKeyManager = new SSHKeyManager(getConfig());
+
         this.getCommand("gitter").setExecutor(new GitterCommand());
     }
 
@@ -47,7 +49,4 @@ public final class Main extends JavaPlugin {
             exception.printStackTrace();
         }
     }
-
-    @Override
-    public void onDisable() {}
 }

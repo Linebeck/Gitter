@@ -1,4 +1,4 @@
-package com.hyrulecraft.gitter.handlers;
+package com.linebeck.gitter.handlers;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
