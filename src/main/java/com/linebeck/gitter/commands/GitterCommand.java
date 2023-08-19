@@ -19,7 +19,11 @@ public class GitterCommand implements CommandExecutor, TabCompleter {
         if(!sender.hasPermission("Gitter.Admin")) { return false; }
 
         if(args.length == 0) {
-            sender.sendMessage(TextHandler.setText("Usage: /gitter <repo name>"));
+            sender.sendMessage(TextHandler.setText("Cloning/Pulling all repositories..."));
+            for(var session : Main.getInstance().getGitSessionManager().gitSessions) {
+                session.cloneRepo(sender);
+            }
+
             return false;
         }
 
