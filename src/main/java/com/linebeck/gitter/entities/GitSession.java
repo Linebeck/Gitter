@@ -33,10 +33,14 @@ public record GitSession(String name, String repository, File directoryLocation,
 
             if(success) {
                 sender.sendMessage(
-                        TextHandler.setText("Successfully cloned/pulled: ", "#d9442d").append(TextHandler.setText(name, "#00A36C"))
+                        TextHandler.setText("Successfully cloned/pulled: ", "#d9442d")
+                                .append(TextHandler.setText(name, "#00A36C"))
                 );
             } else {
-                sender.sendMessage(TextHandler.setText("There was an error cloning/pulling: ", "#880808").append(TextHandler.setText(name, "#00A36C")));
+                sender.sendMessage(
+                        TextHandler.setText("There was an error cloning/pulling: ", "#880808")
+                                .append(TextHandler.setText(name, "#00A36C"))
+                );
             }
         });
     }

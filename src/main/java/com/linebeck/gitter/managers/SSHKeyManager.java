@@ -16,29 +16,27 @@ public class SSHKeyManager {
 
     public SSHKeyManager(FileConfiguration fileConfiguration) {
         ConfigurationSection sshKeysSection = fileConfiguration.getConfigurationSection("SSH-Keys");
-        if(sshKeysSection != null) {
-            for(String key : sshKeysSection.getKeys(false)) {
-                try {
-                    ConfigurationSection sshKey = sshKeysSection.getConfigurationSection(key);
-                    var name = sshKey.getString("Name");
+        if(sshKeysSection == null) return;
 
-                    var sshKeyPath = new File(Main.getInstance().getDataFolder(), FileLocationUtil.correctFilePath(sshKey.getString("SSH-Key-Path")));
-                    var sshKeyPassword = sshKey.getString("SSH-Key-Password");
+        for(String key : sshKeysSection.getKeys(false)) {
+            try {
+                ConfigurationSection sshKey = sshKeysSection.getConfigurationSection(key);
+                var name = sshKey.getString("Name");
 
-                    sshKeys.add(new SSHKey(name, sshKeyPath, sshKeyPassword));
-                    Main.getInstance().getLogger().info("Loaded SSH-Key: " + name);
-                } catch (Exception exception) {
-                    Main.getInstance().getLogger().info("Skipping SSH Key: " + key);
-                }
+                var sshKeyPath = new File(Main.getInstance().getDataFolder(), FileLocationUtil.correctFilePath(sshKey.getString("SSH-Key-Path")));
+                var sshKeyPassword = sshKey.getString("SSH-Key-Password");
+
+                sshKeys.add(new SSHKey(name, sshKeyPath, sshKeyPassword));
+                Main.getInstance().getLogger().info("Loaded SSH-Key: " + name);
+            } catch (Exception exception) {
+                Main.getInstance().getLogger().info("Skipping SSH Key: " + key);
             }
         }
     }
 
     public SSHKey getSSHKeyByName(String name) {
         for(var sshKey : sshKeys) {
-            if(sshKey.name().equalsIgnoreCase(name)) {
-                return sshKey;
-            }
+            if(sshKey.name().equalsIgnoreCase(name)) return sshKey;
         }
         return null;
     }

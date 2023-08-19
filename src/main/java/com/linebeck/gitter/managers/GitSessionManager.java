@@ -17,33 +17,31 @@ public class GitSessionManager {
 
     public GitSessionManager(FileConfiguration fileConfiguration) {
         ConfigurationSection sessions = fileConfiguration.getConfigurationSection("Sessions");
-        if(sessions != null) {
-            for(String key : sessions.getKeys(false)) {
-                try {
-                    ConfigurationSection session = sessions.getConfigurationSection(key);
-                    var name = session.getString("Name");
-                    var repository = session.getString("Repository");
+        if(sessions == null) return;
 
-                    var directoryLocation = new File(Main.getInstance().getDataFolder().getParent(), FileLocationUtil.correctFilePath(session.getString("Directory-Location")));
+        for(String key : sessions.getKeys(false)) {
+            try {
+                ConfigurationSection session = sessions.getConfigurationSection(key);
+                var name = session.getString("Name");
+                var repository = session.getString("Repository");
 
-                    var repositoryType = RepositoryType.getRepositoryTypeByName(session.getString("Repository-Type"));
+                var directoryLocation = new File(Main.getInstance().getDataFolder().getParent(), FileLocationUtil.correctFilePath(session.getString("Directory-Location")));
 
-                    var sshKeyName = session.getString("SSH-Key-Name");
+                var repositoryType = RepositoryType.getRepositoryTypeByName(session.getString("Repository-Type"));
 
-                    gitSessions.add(new GitSession(name, repository, directoryLocation, repositoryType, sshKeyName));
-                    Main.getInstance().getLogger().info("Loaded session: " + name);
-                } catch (Exception exception) {
-                    Main.getInstance().getLogger().info("Skipping session: " + key);
-                }
+                var sshKeyName = session.getString("SSH-Key-Name");
+
+                gitSessions.add(new GitSession(name, repository, directoryLocation, repositoryType, sshKeyName));
+                Main.getInstance().getLogger().info("Loaded session: " + name);
+            } catch (Exception exception) {
+                Main.getInstance().getLogger().info("Skipping session: " + key);
             }
         }
     }
 
     public GitSession getSessionByName(String name) {
         for(var session : gitSessions) {
-            if(session.name().equals(name)) {
-                return session;
-            }
+            if(session.name().equals(name)) return session;
         }
         return null;
     }
