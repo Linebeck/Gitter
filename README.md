@@ -21,7 +21,7 @@ Configuration Steps
             Name: Assign a name to your session for reference.
             Repository: Provide the URL of the GitHub repository you want to clone.
             Directory-Location: Specify the plugin directory where you want the repository to be cloned. You may use either "/" or "\".
-            Repository-Type: Choose either "public" or "private" to indicate the type of repository.
+            Repository-Type: Choose either "DENIZEN" or "CONFIGURATION" to indicate the type of repository.
             SSH-Key-Name: If using SSH authentication, specify the name of the SSH key from the SSH Keys Setup section.
 
 Usage Instructions

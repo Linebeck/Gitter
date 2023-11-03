@@ -46,7 +46,7 @@
                                 </filter>
                             </filters>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <outputFile>C:\Users\Linebeck\Documents\Java Projects\Jars\Builds\Gitter.jar</outputFile>
+                            <outputFile>C:\Users\Linebeck\Documents\Java Projects\Jars\Builds\Gitter-2.0.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>

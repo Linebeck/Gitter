@@ -25,10 +25,10 @@ public record GitSession(String name, String repository, File directoryLocation,
     public void cloneRepo(CommandSender sender) {
         Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
             boolean success;
-            if(sshKeyName.isEmpty()) {
-                success = cloneWithoutSSH();
-            } else {
+            if(sshKeyName != null && !sshKeyName.isEmpty()) {
                 success = cloneWithSSH();
+            } else {
+                success = cloneWithoutSSH();
             }
 
             if(success) {
