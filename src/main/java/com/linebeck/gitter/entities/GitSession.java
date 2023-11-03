@@ -48,7 +48,7 @@ public record GitSession(String name, String repository, File directoryLocation,
     }
 
     private boolean cloneWithoutSSH() {
-        if(isPublicRepositoryLink()) {
+        if(!isPublicRepositoryLink()) {
             Main.getInstance().getLogger().info("You must use the HTTPS URL to clone a public repository.");
             return false;
         }
@@ -123,9 +123,6 @@ public record GitSession(String name, String repository, File directoryLocation,
     }
 
     private boolean isPublicRepositoryLink() {
-        if(!this.repository.startsWith("https://github.com/")) {
-            return false;
-        }
-        return true;
+        return this.repository.startsWith("https://github.com/");
     }
 }
