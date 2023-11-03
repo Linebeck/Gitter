@@ -26,8 +26,10 @@ public record GitSession(String name, String repository, File directoryLocation,
         Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
             boolean success;
             if(sshKeyName != null && !sshKeyName.isEmpty()) {
+                Main.getInstance().getLogger().info("Cloning " + name + " via SSH.");
                 success = cloneWithSSH();
             } else {
+                Main.getInstance().getLogger().info("Cloning " + name + " via public.");
                 success = cloneWithoutSSH();
             }
 
@@ -46,6 +48,11 @@ public record GitSession(String name, String repository, File directoryLocation,
     }
 
     private boolean cloneWithoutSSH() {
+        if(isPublicRepositoryLink()) {
+            Main.getInstance().getLogger().info("You must use the HTTPS URL to clone a public repository.");
+            return false;
+        }
+
         try {
             if(this.directoryLocation.exists() && new File(this.directoryLocation, ".git").exists()) {
                 try (Git git = Git.open(this.directoryLocation)) {
@@ -113,5 +120,12 @@ public record GitSession(String name, String repository, File directoryLocation,
             exception.printStackTrace();
             return false;
         }
+    }
+
+    private boolean isPublicRepositoryLink() {
+        if(!this.repository.startsWith("https://github.com/")) {
+            return false;
+        }
+        return true;
     }
 }
